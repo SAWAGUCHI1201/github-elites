@@ -12,6 +12,7 @@ $types = array(
 $notName ="";
 $notMail ="";
 $notMessage ="";
+$error = "";
 
 //最初にページを開いた時はGETでページを返すため以下の処理は行われない
 if($_SERVER['REQUEST_METHOD'] === 'POST' )
@@ -35,9 +36,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
     $notMessage = "内容が未入力です。";
   }//内容の入力チェック
 
-  if( !$error = "blank" ){
-
-    $data = $name . "," . $mail . "," . $item . "," . $message . "\n";
+  if( $error = "" ){
 
     if(!$fp = fopen( $fileName, 'a' )){
       echo 'ファイルを読み込めませんでした。';
@@ -46,9 +45,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
       echo 'ファイルに書き込めませんでした。';
     }
     fclose( $fp );
+    // $data = $name . "," . $mail . "," . $item . "," . $message . "\n";
+    // $fp = fopen( $fileName, 'a' );
+    // fwrite( $fp , $data );
+    // fclose( $fp );
 
-    $posts = file( $fileName ,FILE_IGNORE_NEW_LINES );
-    $posts = array_reverse($posts);
+    // $posts = file( $fileName ,FILE_IGNORE_NEW_LINES );
+    // $posts = array_reverse($posts);
     //リダイレクトでthanks.phpに移動して処理が終わる。
     header('Location:thanks.php');
     exit;
