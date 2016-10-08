@@ -14,6 +14,7 @@ $notMail ="";
 $notMessage ="";
 $error = "";
 
+
 //最初にページを開いた時はGETでページを返すため以下の処理は行われない
 if($_SERVER['REQUEST_METHOD'] === 'POST' )
 {
@@ -36,9 +37,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
     $notMessage = "内容が未入力です。";
   }//内容の入力チェック
 
-  if( $error = "" ){
+  if( !$error == "blank" ){
 
-    if(!$fp = fopen( $fileName, 'a' )){
+    $data = $name . "," . $mail . "," . $item . "," . $message . "\n";
+    if(!$fp = fopen( $fileName, "a" )){
       echo 'ファイルを読み込めませんでした。';
     }
     if(!fwrite( $fp , $data )){
@@ -52,9 +54,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
 
     // $posts = file( $fileName ,FILE_IGNORE_NEW_LINES );
     // $posts = array_reverse($posts);
+
     //リダイレクトでthanks.phpに移動して処理が終わる。
     header('Location:thanks.php');
     exit;
+
   }
   // if(empty($_POST["name"])){$notName = "名前が未入力です。"; }//入力の確認
   // if(empty($_POST["mail"])){$notMail = "メールアドレスが未入力です。"; }
