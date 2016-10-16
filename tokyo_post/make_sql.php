@@ -3,7 +3,7 @@
 
 
 $fp = fopen('tokyo_post.csv', 'r');
-while (($data = fgetcsv($fp)) !== FALSE) {//FALSEじゃない間
+while (($data = fgetcsv($fp, 50)) !== FALSE) {//FALSEじゃない間
     $postcode = $data[2];
     $kana1 = $data[3];
     $kana2 = $data[4];
@@ -11,8 +11,8 @@ while (($data = fgetcsv($fp)) !== FALSE) {//FALSEじゃない間
     $address1 = $data[6];
     $address2 = $data[7];
     $address3 = $data[8];
-    echo $Insert = 'insert into address(postcode,kana1,kana2,kana3,kanji1,kanji2,kanji3)values('.
-              $postcode.','.$kana1.','.$kana2.','.$kana3.','.$address1.','.$address2.','.$address3.');<br>';
+    echo $Insert = 'insert into address(postcode,kana1,kana2,kana3,kanji1,kanji2,kanji3)values("'.
+              $postcode.'","'.$kana1.'","'.$kana2.'","'.$kana3.'","'.$address1.'","'.$address2.'","'.$address3.'");<br>';
 }
 fclose($fp);
 
