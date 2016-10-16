@@ -12,7 +12,6 @@ $types = array(
 $notName ="";
 $notMail ="";
 $notMessage ="";
-$error = "";
 
 
 //最初にページを開いた時はGETでページを返すため以下の処理は行われない
@@ -23,21 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
   $message = $_POST["message"];
   $item = $_POST["item"];
 
-
-  if($_POST["name"] === ""){
-    $error = "blank";
-    $notName = "名前が未入力です。";
-  }//名前の入力チェック
-  if($_POST["mail"] === ""){
-    $error = "blank";
-    $notMail = "メールアドレスが未入力です。";
-  }//メールの入力チェック
-  if($_POST["message"] === ""){
-    $error = "blank";
-    $notMessage = "内容が未入力です。";
-  }//内容の入力チェック
-
-  if( !$error == "blank" ){
+  if($notName != "" && $notMail != "" && $notMessage != ""){
 
     $data = $name . "," . $mail . "," . $item . "," . $message . "\n";
     if(!$fp = fopen( $fileName, "a" )){
@@ -47,39 +32,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
       echo 'ファイルに書き込めませんでした。';
     }
     fclose( $fp );
-    // $data = $name . "," . $mail . "," . $item . "," . $message . "\n";
-    // $fp = fopen( $fileName, 'a' );
-    // fwrite( $fp , $data );
-    // fclose( $fp );
-
-    // $posts = file( $fileName ,FILE_IGNORE_NEW_LINES );
-    // $posts = array_reverse($posts);
 
     //リダイレクトでthanks.phpに移動して処理が終わる。
     header('Location:thanks.php');
     exit;
 
+  }else{
+    $notName = "名前が未入力です。";
+    $notMail = "メールアドレスが未入力です。";
+    $notMessage = "内容が未入力です。";
   }
-  // if(empty($_POST["name"])){$notName = "名前が未入力です。"; }//入力の確認
-  // if(empty($_POST["mail"])){$notMail = "メールアドレスが未入力です。"; }
-  // if(empty($_POST["message"])){$notMessage = "内容が未入力です。"; }
-/*
-  $data = $name . "," . $mail . "," . $item . "," . $message . "\n";
 
-  if(!$fp = fopen( $fileName, 'a' )){
-    echo 'ファイルを読み込めませんでした。';
-  }
-  if(!fwrite( $fp , $data )){
-    echo 'ファイルに書き込めませんでした。';
-  }
-  fclose( $fp );
-
-  $posts = file( $fileName ,FILE_IGNORE_NEW_LINES );
-  $posts = array_reverse($posts);
-  //リダイレクトでthanks.phpに移動して処理が終わる。
-  header('Location:thanks.php');
-  exit;
-*/
 }
 ?>
 
