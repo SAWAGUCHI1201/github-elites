@@ -53,8 +53,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
     $stmt -> execute();
 
     //リダイレクトでthanks.phpに移動して処理が終わる。
-    // header('Location:thanks.php');
-    // exit;
+    header('Location:thanks.php');
+    exit;
 
   }
 
