@@ -3,17 +3,28 @@
 $dsn = 'mysql:host=localhost;dbname=contact_form;charset=utf8';
 $user = 'customer';
 $password = '0000';
+//--------------------------------------------
+//DBから配列を読み込む データベース接続
+//テーブルから値を取得して配列にまとめる
+try{
+  $dbh = new PDO( $dsn, $user, $password );
+}
+catch (PDOException $e){
+  echo $e -> getMessage();
+  exit;
+}
+//sql処理
+$query = 'select * from types';
+//sqlコマンド
+$sql_type = $dbh -> query($query);
+//select * from types で出た結果をfetchAllで配列にする
+$data = $sql_type -> fetchAll();
+
+//--------------------------------------------
 
 $notName ="";
 $notMail ="";
 $notMessage ="";
-
-$types = array(
-          1 => '商品について',
-          2 => '支払いについて',
-          3=> '当サイトについて',
-          4 =>'その他'
-);
 
 //最初にページを開いた時はGETでページを返すため以下の処理は行われない
 if($_SERVER['REQUEST_METHOD'] === 'POST' )
@@ -23,38 +34,43 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
   $message = $_POST["message"];
   $type = $_POST["type"];
 
-  if(empty($name) && empty($mail) && empty($message)){
-
+  //バリデーション
+  if($name == ''){
     $notName = "名前が未入力です。";
+  }
+  if($mail == ''){
     $notMail = "メールアドレスが未入力です。";
+  }
+  if($message == ''){
     $notMessage = "内容が未入力です。";
+  }
+//データベース書き込み-----------------------------------------
+  if(empty($notName) && empty($notMail) && empty($notMessage)){
+      //データベースへ接続する
+      try
+      {
+        $dbh = new PDO( $dsn, $user, $password );
+      }
+      catch (PDOException $e)
+      {
+        echo $e -> getMessage();
+        exit;
+      }
+      //データベースに書き込みをする
+      $sql = "insert into get_content(name,mail,type,inquiry)values(:name,:email,:type,:message)";
+      $stmt = $dbh->prepare($sql);
 
-  }else{
-    //データベースへ接続する
-    try
-    {
-      $dbh = new PDO( $dsn, $user, $password );
-    }
-    catch (PDOException $e)
-    {
-      echo $e -> getMessage();
+      //値をバインド(代入する)
+      $stmt->bindParam(':name',$name);
+      $stmt->bindParam(':email',$email);
+      $stmt->bindParam(':type',$type);
+      $stmt->bindParam(':message',$message);
+
+      $stmt -> execute();
+
+      //リダイレクトでthanks.phpに移動して処理が終わる。
+      header('Location:thanks.php');
       exit;
-    }
-    //データベースに書き込みをする
-    $sql = "insert into get_content(name,mail,type,inquiry)values(:name,:email,:type,:message)";
-    $stmt = $dbh->prepare($sql);
-
-    //値をバインド(代入する)
-    $stmt->bindParam(':name',$name);
-    $stmt->bindParam(':email',$email);
-    $stmt->bindParam(':type',$type);
-    $stmt->bindParam(':message',$message);
-
-    $stmt -> execute();
-
-    //リダイレクトでthanks.phpに移動して処理が終わる。
-    header('Location:thanks.php');
-    exit;
 
   }
 
@@ -178,8 +194,9 @@ textarea {
   <dl>
     <dt>種類<span>(必須)</span></dt>
     <dd><select name="type">
-          <?php foreach($types as $number => $type): ?>
-            <?php echo '<option value="' . $number .'">' . $type . '</option>'; ?>
+          <!-- データベースより引用 -->
+          <?php foreach($data as $number => $type): ?>
+            <?php echo '<option value="' . $type['id'] .'">' . $type['type'] . '</option>'; ?>
           <?php endforeach; ?>
         </select>
     </dd>
@@ -193,6 +210,5 @@ textarea {
   <input class="submit" type="submit" name="submit" value="送信">
   </form>
 </div>
-
 </body>
 </html>
