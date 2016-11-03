@@ -44,6 +44,8 @@ $sql = "select * from get_inquiry";
 $stmt = $dbh->prepare($sql);
 
 $stmt -> execute();
+//fetchAllでSQL結果の全レコードを取得する foreachで出力
+$rows = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -133,7 +135,7 @@ tr td{
     <th class="col_type">TYPE</th>
     <th class="col_inquiry">INQUIRY</th>
   </tr>
-  <?php foreach($stmt as $record => $col): ?>
+  <?php foreach($rows as $record => $col): ?>
   <tr class="record">
     <td class="col_id"><?php echo $col['id']; ?></td>
     <td class="col_name"><?php echo $col['name']; ?></td>
