@@ -57,12 +57,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' )
         exit;
       }
       //データベースに書き込みをする
-      $sql = "insert into get_content(name,mail,type,inquiry)values(:name,:email,:type,:message)";
+      $sql = "insert into get_inquiry(name,mail,type,inquiry)values(:name,:email,:type,:message)";
       $stmt = $dbh->prepare($sql);
 
       //値をバインド(代入する)
       $stmt->bindParam(':name',$name);
-      $stmt->bindParam(':email',$email);
+      $stmt->bindParam(':email',$mail);
       $stmt->bindParam(':type',$type);
       $stmt->bindParam(':message',$message);
 
