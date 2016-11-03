@@ -4,7 +4,7 @@
 function connectDatabase()
 {
   try{
-    return new PDO(DSN,USER,PASSWORD)
+    return new PDO(DSN,USER,PASSWORD);
   }
   catch (PDOException $e)
   {
