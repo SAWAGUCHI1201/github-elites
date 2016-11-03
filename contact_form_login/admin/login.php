@@ -177,6 +177,7 @@ h3{
 <body>
 <header>
   <h1>管理者ログイン</h1>
+  <p style="font-size:10px; text-align:center;">このプログラムはcontact_form_detabaseディレクトリのフォームと連携しています。</p>
 </header>
 <div class="contact">
   <h3>管理者専用ログイン画面</h3>
