@@ -31,6 +31,10 @@ function h($s)
 
 session_start();
 
+$id = $_SESSION['id'];
+var_dump($id);
+
+
 if(empty($_SESSION['id']))
 {
   //ログインされずにアクセスされた場合
@@ -38,7 +42,7 @@ if(empty($_SESSION['id']))
   exit;
 }
 
-//データベース接続
+//データベース接続 お問合せ内容の取得
 $dbh = connectDatabase();
 $sql = "select * from get_inquiry";
 $stmt = $dbh->prepare($sql);
@@ -46,6 +50,21 @@ $stmt = $dbh->prepare($sql);
 $stmt -> execute();
 //fetchAllでSQL結果の全レコードを取得する foreachで出力
 $rows = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+
+
+//引き継がれた$_SESSION['id']をGETで受け渡す(delete.php)
+if(isset($_SESSION['id']))
+{
+  //データベース接続 会員情報の表示
+  $dbh_m = connectDatabase();
+  $sql_m = "select * from member where id = 2 ";
+  $stmt_m = $dbh_m -> prepare($sql_m);
+  // $stmt_m -> bindPram(":id",$id );
+  $stmt_m -> execute();
+
+  $member = $stmt_m -> fetchAll(PDO::FETCH_ASSOC);
+  var_dump($member);
+}
 
 ?>
 <!DOCTYPE html>
@@ -111,7 +130,7 @@ tr td{
   width:10px;
 }
 
-.logout{
+.logout,.change_pass{
   text-decoration:none;
   text-align:right;
   padding:2px 5px;
@@ -127,6 +146,7 @@ tr td{
 <div id="container">
 <h1>お問い合わせ内容一覧</h1>
 <a class="logout" href="logout.php">ログアウト</a>
+<a class="change_pass" href="change_pass.php?id=<?php echo h($member['id']) ?>">パスワードの変更をする</a>
 <table>
   <tr class="column">
     <th class="col_id">ID</th>

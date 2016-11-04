@@ -59,7 +59,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
       $errors['password'] = 'パスワードが未入力です。';
   }
-
+  //未入力がなかった場合
   if(empty($errors))
   {
       //データベース接続
@@ -72,8 +72,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
       $stmt -> bindParam(':password',$password);
       //sqlの実行
       $stmt -> execute();
-      //該当するレコードを呼び出す
-      $row = $stmt -> fetch();
+      //該当するレコードをすべて呼び出す
+      $row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
       if($row)
       { //入力した値が一致した際に呼び出された情報を格納する
