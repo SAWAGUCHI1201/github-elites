@@ -1,23 +1,22 @@
 <?php
-
-  //DB接続 config.php参照
-  function connectDatabase()
+function connectDatabase()
+{
+  try
   {
-    try{
-      return new PDO(DSN,USER,PASSWORD,
-      array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    }
-    catch (PDOException $e)
-    {
-      echo $e -> getMessage();
-      exit;
-    }
+    return new PDO(DSN,USER,PASSWORD);
   }
-
-  //エスケープ処理
-  function h($s)
+  catch(PDOExeption $e)
   {
-    return htmlspecialchars($s,ENT_QUOTES,"UTF-8");
+    echo $e->getMessage();
+    exit;
   }
+}
+
+function h($s)
+{
+  return htmlspecialchars($s, ENT_QUOTES, "UTF-8");
+}
+
 
 ?>
+

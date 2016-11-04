@@ -1,33 +1,7 @@
 <?php
-//DB接続に必要な情報 定数
-define('DSN','mysql:host=localhost;dbname=contact_form;charset=utf8');
-define('USER','customer');
-define('PASSWORD','0000');
 
-//エラーレベルの設定 エラー
-//Noticeエラーの表示をしない
-error_reporting(E_ALL & ~E_NOTICE);
-
-
-//DB接続 config.php参照
-function connectDatabase()
-{
-  try{
-    return new PDO(DSN,USER,PASSWORD);
-  }
-  catch (PDOException $e)
-  {
-    echo $e -> getMessage();
-    exit;
-  }
-}
-
-//エスケープ処理
-function h($s)
-{
-  return htmlspecialchars($s,ENT_QUOTES,"UTF-8");
-}
-
+require_once('config.php');
+require_once('functions.php');
 
 //セッションの破棄 入力した値データのリセット
 $SESSION = array();
@@ -73,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
       //sqlの実行
       $stmt -> execute();
       //該当するレコードをすべて呼び出す
-      $row = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+      $row = $stmt -> fetch();
 
       if($row)
       { //入力した値が一致した際に呼び出された情報を格納する

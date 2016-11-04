@@ -1,39 +1,9 @@
 <?php
-//DB接続に必要な情報 定数
-define('DSN','mysql:host=localhost;dbname=contact_form;charset=utf8');
-define('USER','customer');
-define('PASSWORD','0000');
 
-//エラーレベルの設定 エラー
-//Noticeエラーの表示をしない
-error_reporting(E_ALL & ~E_NOTICE);
-
-
-//DB接続 config.php参照
-function connectDatabase()
-{
-  try{
-    return new PDO(DSN,USER,PASSWORD);
-  }
-  catch (PDOException $e)
-  {
-    echo $e -> getMessage();
-    exit;
-  }
-}
-
-//エスケープ処理
-function h($s)
-{
-  return htmlspecialchars($s,ENT_QUOTES,"UTF-8");
-}
-
-
+require_once('config.php');
+require_once('functions.php');
 session_start();
-
 $id = $_SESSION['id'];
-var_dump($id);
-
 
 if(empty($_SESSION['id']))
 {
@@ -48,6 +18,7 @@ $sql = "select * from get_inquiry";
 $stmt = $dbh->prepare($sql);
 
 $stmt -> execute();
+
 //fetchAllでSQL結果の全レコードを取得する foreachで出力
 $rows = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
@@ -57,13 +28,13 @@ if(isset($_SESSION['id']))
 {
   //データベース接続 会員情報の表示
   $dbh_m = connectDatabase();
-  $sql_m = "select * from member where id = 2 ";
+  $sql_m = "select * from member where id = :id ";
   $stmt_m = $dbh_m -> prepare($sql_m);
-  // $stmt_m -> bindPram(":id",$id );
+  $stmt_m -> bindParam(":id",$id );
   $stmt_m -> execute();
 
-  $member = $stmt_m -> fetchAll(PDO::FETCH_ASSOC);
-  var_dump($member);
+  $member = $stmt_m -> fetch();
+  // var_dump($member);
 }
 
 ?>
@@ -146,7 +117,8 @@ tr td{
 <div id="container">
 <h1>お問い合わせ内容一覧</h1>
 <a class="logout" href="logout.php">ログアウト</a>
-<a class="change_pass" href="change_pass.php?id=<?php echo h($member['id']) ?>">パスワードの変更をする</a>
+<a class="change_pass" href="change_pass.php?id=<?php echo h($member['id']) ?>">
+パスワードの変更をする</a>
 <table>
   <tr class="column">
     <th class="col_id">ID</th>
@@ -161,7 +133,9 @@ tr td{
     <td class="col_name"><?php echo $col['name']; ?></td>
     <td class="col_mail"><?php echo $col['mail']; ?></td>
     <td class="col_type"><?php echo $col['type']; ?></td>
-    <td class="col_inquiry"><?php echo $col['inquiry']; ?></td>
+    <td class="col_inquiry"><?php echo $col['inquiry']; ?>
+        <a href="delete.php?id=<?php echo h($col['id']) ?>">[削除する]</a>
+    </td>
   </tr>
   <?php endforeach ?>
 </table>
