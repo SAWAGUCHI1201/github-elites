@@ -14,13 +14,14 @@ if(empty($_SESSION['id']))
   exit;
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
+{//投稿用
   $name = $_SESSION['name'];//login.phpからfetchした情報
   $message = $_POST['message'];
   $errors = array();
 
-  //バリデーション
+  //投稿記事のバリデーション
   if($message == '')
   {
     $errors['message'] = 'メッセージが未入力です。';
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   if (empty($errors))
   { //データベースへ$_SESSION['id']に格納された値があるかどうかを確認
       $dbh = connectDatabase();
-      $sql = "insert into posts (name,message,created_at,update_at)
+      $sql = "insert into posts (name,message,created_at,updated_at)
               values(:name, :message, now(), now() );";
       $stmt = $dbh -> prepare($sql);
       $stmt -> bindParam(":name",$name);
@@ -45,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 //データベースより投稿内容の呼び出し
 $dbh = connectDatabase();
-$sql = "select * from posts order by update_at desc";
+$sql = "select * from posts order by updated_at desc";
 //投稿された時刻の新しい順で表示する
 $stmt = $dbh -> prepare($sql);
 $stmt -> execute();
@@ -95,6 +96,7 @@ p{
       @<?php echo h($post['name']) ?><br>
       <?php echo h($post['message']) ?><br>
       <a href="edit.php?id=<?php echo h($post['id']) ?>">[編集する]</a>
+      <a href="delete.php?id=<?php echo h($post['id']) ?>">[削除する]</a>
       <!-- edit.phpでGETで$post['id']の値を渡すことができる -->
       <?php echo h($post['update_at']) ?>
       <hr>

@@ -18,5 +18,5 @@ id int primary key auto_increment,
 name varchar(255),
 message text,
 created_at datetime,
-update_at datetime
+updated_at datetime
 );
