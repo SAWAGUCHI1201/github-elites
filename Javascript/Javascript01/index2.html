@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>JS-confirmの実行</title>
+        <script>
+            window.onload = function() {
+                document.getElementById("alert").addEventListener("click", function( event ) {
+                    if (confirm("アラート実行!!")) {
+                        // OKをクリック時の処理
+                        alert("OK");
+                    } else {
+                        // キャンセルをクリック時の処理
+                        alert("キャンセル");
+                    }
+                }, false);
+            }
+        </script>
+    </head>
+    <body>
+        <button id="alert">CLICK</button>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>jQuery(addClassメソッド)</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<style>
+.class1 {
+  background:red;
+  font-size:10px;
+}
+
+.text2 {
+  background:blue;
+  font-size:10px;
+}
+</style>
+<script>
+//addClass classの追加
+//$("対象のDOM").addClass("追加するクラス名");
+$(function(){
+  $(".text").addClass("class1");
+});
+
+//removeClass クラスを取り除く
+//$("対象のDOM").removeClass("対象のクラス名");
+//複数のクラスをしていするにはスペースで区切る
+$(function(){
+  $(".text2").removeClass("text2 sample");
+});
+
+
+</script>
+
+</head>
+<body>
+
+<div class="text"><span>text1</span></div>
+<div class="text2 sample"><span>text2</span></div>
+
+</body>
+</html>

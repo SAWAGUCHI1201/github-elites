@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>jQuery(prevevtDefault)</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+//イベントのキャンセル
+// $("対象の要素").click(function(event){
+//   event.preventDefault();
+// });
+
+//イベントをキャンセルさせてアラートを実行
+$(function(){
+
+  $("a").click(function(event){
+    event.preventDefault();
+    alert("クリック");
+  });
+
+});
+
+</script>
+
+</head>
+<body>
+
+  <a href="http://google.com">Googleに移動</a>
+  <div style="height:2000px;"></div>
+  <a href="#">移動</a>
+
+</body>
+</html>

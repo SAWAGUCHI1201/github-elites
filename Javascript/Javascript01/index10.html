@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>無名関数について</title>
+<body>
+<script>
+//無名関数 一度きりの実行などの場合に使う
+// var 変数名 = function (引数)
+// {
+//  実行内容
+// };
+
+var sample = function(message){
+  console.log(message);
+};
+sample("メッセージ");
+
+//即時関数 その場で即時実行される関数
+//( function(引数){実行内容;}(引数に代入する文字列) );
+
+(function (message){
+  console.log(message);
+}("メッセージ"));
+
+
+</script>
+</body>
+</head>

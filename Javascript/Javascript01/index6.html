@@ -1,0 +1,42 @@
+<DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>連想配列の定義</title>
+</head>
+<body>
+<script>
+
+var obj = {
+  key1: "文字列1",
+  key2: "文字列2",
+  key3: 32
+};
+
+console.log(obj);
+console.log(obj.key1);
+console.log(obj["key1"]);
+
+obj.key1 = ["変更する文字列"];
+console.log(obj.key1);
+</script>
+
+<!--
+
+※連想配列の定義
+var 変数名 = {
+  key1: "要素1",
+  key2: "要素2",
+  key3: 32
+};
+
+※連想配列の要素の取得
+console.log(obj.key1);
+console.log(obj["key1"]);
+
+※連想配列の要素の変更
+obj.key1 = ["変更する内容"];
+ -->
+
+</body>
+</html>

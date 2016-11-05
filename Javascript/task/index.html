@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery課題1</title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <style type="text/css">
+  div, p {
+    margin: 0 0 0 10px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    display: inline-block;
+  }
+  hr {
+    border-color: #f8f8f8;
+  }
+  </style>
+  <script>
+    // ここに JavaScript を書く
+ $(function(){
+
+  //2番目の要素をborder 5px
+  $("#area2").css("border","5px solid #ccc");
+
+  //すべての要素の背景色を変える
+  $(".square").css("background","#ccccff");
+
+  //名前に既存の文字列を表示させる
+  $("input[name=name]").val("課題さん");
+  //カナにCSSを加える
+  $("input[name=kana]").css({
+    "background":"#ffcccc",
+    "border":"2px #ff3333 solid"
+  });
+  //住所を入力不可にする http://qiita.com/kbyay_/items/7a7ce9547f29b34a63b1
+  $("input[name=address]").prop("disabled",true);
+  //チェックを入れる
+  $("input[name=check]").prop("checked",true);
+  //左から3番目の要素の変更
+  $("#container div:nth-child(3)").css("border","5px solid #ccc");
+  //左から2番目までの要素の変更 http://alphasis.info/2011/11/jquery-api-slice-start-end/
+  $(".square2").slice(0,2).css('background','#ccccff');
+  //それぞれの要素の中に属性を表示させる
+  $(".label-box").each(function(){
+    $(".label-box").text($(this).attr('data-label'));
+    $(".label-box").css("text-align","center");
+  });
+
+
+ });
+
+  </script>
+</head>
+<body>
+  <div id="area1"></div>
+  <div id="area2"></div>
+  <div id="area3"></div>
+  <div id="area4"></div>
+
+  <hr>
+
+  <div class="square"></div>
+  <div class="square"></div>
+  <div class="square"></div>
+  <div class="square"></div>
+
+  <hr>
+
+  名前: <input type="text" name="name"><br>
+  カナ: <input type="text" name="kana"><br>
+  住所: <input type="text" name="address"><br>
+  チェック: <input type="checkbox" name="check"><br>
+
+  <hr>
+
+  <section id="container">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </section>
+
+  <hr>
+
+  <div class="square2"></div>
+  <div class="square2"></div>
+  <p class="square2"></p>
+  <p class="square2"></p>
+
+  <hr>
+
+  <!-- 応用要件 -->
+  <div class="label-box" data-label="label1"></div>
+  <div class="label-box" data-label="label2"></div>
+  <div class="label-box" data-label="label3"></div>
+  <div class="label-box" data-label="label4"></div>
+
+
+</body>
+</html>

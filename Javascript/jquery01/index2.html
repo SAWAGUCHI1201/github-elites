@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>jQuery(htmlメソッド)</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<style>
+.text {
+  background:red;
+}
+</style>
+<script>
+//htmlの取得
+//$(".text").html("")
+
+//htmlの変更
+//$("div").html("change html");
+
+$(function(){
+  console.log($(".text").html());
+  $(".text").html("<p>変更する内容</p>");
+});
+</script>
+
+</head>
+<body>
+
+<div class="text"><span>text1</span></div>
+<div class="text2"><span>text2</span></div>
+
+</body>
+</html>

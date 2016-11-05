@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>jQuery(イベント)</title>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<style>
+
+
+.onmouse {
+  width:300px;
+  height:100px;
+  background:#EEEEEE;
+}
+
+</style>
+<script>
+//クライアント側の操作に対する処理
+//clickイベント changeイベント submitイベント mouseoserイベント mouseoutイベント etc...
+
+
+$(function(){
+
+//① #clickをクリックした時のイベント
+  $("#click").click(function(){
+    alert("クリックされました");
+  });
+//② name="change"が変更された時のイベント
+  $("[name=change]").change(function(){
+    alert("changeメソッドでテキスト変更");
+  });
+//③ formが送信された時のイベント
+  $("form").submit(function(){
+    alert("入力された情報が送信されました。");
+  });
+//④.onmouseにマウスが乗った時のイベント
+  $(".onmouse").mouseover(function(){
+    $(".message").text("マウスオーバーされました。");
+  });
+//⑤.onmouseからマウスアウトした時のイベント
+   $(".onmouse").mouseout(function(){
+    $(".message").text("マウスアウトしました。");
+   });
+});
+
+
+
+</script>
+
+</head>
+<body>
+
+<form action="" method="post">
+  ①<input type="text" name="change" value="テキスト変更前" size="50"><br>
+  ②<button type="button" id="click">クリックしてください</button><br>
+  ③<button type="submit">送信</button>
+</form>
+
+<div class="message">④マウスが乗っていません</div><br>
+<div class="onmouse">⑤マウスを乗せてください</div>
+
+</body>
+</html>

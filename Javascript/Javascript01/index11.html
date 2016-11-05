@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>setTimeout</title>
+<body>
+<script>
+//一定時間経過後に指定した処理を行う
+//第一引数に指定時間に行う処理
+//第二引数に指定時間をミリ秒で入力
+
+// setTimeout(function(){
+//   処理内容
+// }, 時間指定);
+
+//無名関数
+setTimeout(function(){
+  alert("指定時間経過");
+  console.log("指定時間経過(無名関数)");
+}, 1500);
+
+
+//関数
+function sample()
+{
+  alert("5秒後の処理(関数)");
+};
+setTimeout(sample,5000);
+
+</script>
+</body>
+</head>
