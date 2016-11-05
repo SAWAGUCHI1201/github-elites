@@ -157,11 +157,10 @@ $articles = 0;
     //div classにvalを代入して表示するclassを特定する
     $("select").change(function(){
       var setOption = $("option:selected").val();//選択されたoptionのvalue取得
-      var showPref = $("div."+setOption).show();//取得したvalに該当するクラスを表示
+      var showPref = $(".media."+setOption).show();//取得したvalに該当するクラスを表示
       // $("div."+setOption:not("div")).hide();
-      $("div."+setOption).not("div").hide();//選択されたoption以外を非表示
+      $(".media."+setOption).not(".media").hide(".media");//選択されたoption以外を非表示
     });
-
   });
   </script>
 </body>
