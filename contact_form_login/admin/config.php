@@ -7,8 +7,3 @@ define('PASSWORD','0000');
 //エラーレベルの設定 エラー
 //Noticeエラーの表示をしない
 error_reporting(E_ALL & ~E_NOTICE);
-
-
-
-
-?>

@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   if (empty($errors))
   {
     //現在のパスワードの値を確認
-    $dbh_p = connectDatabase();
+    $dbh = connectDatabase();
     $sql_p = "select * from member where id = :id and password = :password";
-    $stmt_p = $dbh_p -> prepare($sql_p);
+    $stmt_p = $dbh -> prepare($sql_p);
     $stmt_p -> bindParam(':id',$id);
     $stmt_p -> bindParam(':password',$password);
     $stmt_p -> execute();
