@@ -42,10 +42,22 @@
   //左から2番目までの要素の変更 http://alphasis.info/2011/11/jquery-api-slice-start-end/
   $(".square2").slice(0,2).css('background','#ccccff');
   //それぞれの要素の中に属性を表示させる
+  //.eachでクラス一つ一つ処理を行う
+  $(".label-box").css("text-align","center");
   $(".label-box").each(function(){
-    $(".label-box").text($(this).attr('data-label'));
-    $(".label-box").css("text-align","center");
+    $(this).text($(this).attr('data-label'));
   });
+
+// $(".label-box").each(function(){
+//   var label = $(this).attr('data-label');
+//   $(this).text(label);
+// });
+
+//変数には$マークはいらないがわかりやすくするためにつける
+// $(".label-box").each(function(){
+//   var $box = $(this);
+//   $box.text($box.attr('data-label'));
+// });
 
 
  });
