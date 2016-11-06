@@ -101,7 +101,7 @@ $places = array(
   h1 {margin: 0 0 30px 0;padding: 20px 30px;border-bottom: 1px solid #ccc;background-color: #f8f8f8;}
   footer {text-align:center;}
   .search-result {margin: 10px 0;}
-  .media {display:none;}
+  .media {display:none;}*/
   </style>
 </head>
 <body>
@@ -122,12 +122,12 @@ $places = array(
     <button id="remove">リセット</button>
 
     <p class="search-result">
-      <span>件数の表示はあとでやる</span>
+      <span class="classCount"></span>
     </p>
 
-    <?php foreach($places as $key => $place): ?>
-      <?php foreach($place as $item): ?>
-      <div class="media <?php echo $key; ?>">
+    <?php foreach($places as $place => $key): ?>
+      <?php foreach($key as $item): ?>
+      <div class="media plef_<?php echo $place ?> ">
         <div class="media-left">
               <img src="<?php echo $item['image']; ?>">
         </div>
@@ -138,8 +138,6 @@ $places = array(
       </div>
       <?php endforeach; ?>
     <?php endforeach; ?>
-
-<?php var_dump($key); ?>
   </div>
   <hr>
   <footer>&copy; 観光スポット検索協会 </footer>
@@ -150,14 +148,17 @@ $places = array(
     $("button").click(function(){
       $("option[value=reset]").prop("selected",true);
     });
-    //selectが変更された時のvalを取得
-    //div classにvalを代入して表示するclassを特定する
+
     $("select").change(function(){
-      //$(".media").hide();
-      //var setOption = $("option:selected").val();//選択されたoptionのvalue取得
-      //var showPref = $(".media."+setOption).show();//取得したvalに該当するクラスを表示
-      // $("div."+setOption:not("div")).hide();
-      //$(".media."+setOption).not(".media").hide(".media");//選択されたoption以外を非表示
+      $(".media").hide();//とりあえず消す
+      var setOption = $("option:selected").val();//選択されたoptionのvalue取得
+      var setClass = "plef_"+setOption;//setOptionで取得した値と文字列plef_を連結する
+      var showPref = $("div."+setClass).show();//連結したsetClassに該当するクラスを表示
+      var classCount = $("div."+setClass).length;//連結したクラス名を持つクラスを数える
+      var InLength = $(".classCount").text(classCount + "件見つかりました。");//件数があった場合の処理クラスにclassCountで取得した数を入れる
+      if ( classCount = "0" ){
+        $(".classCount").text("スポットは見つかりませんでした。");
+      };
     });
   });
   </script>
