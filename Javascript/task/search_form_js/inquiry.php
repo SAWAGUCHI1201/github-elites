@@ -145,13 +145,14 @@ $places = array(
   $(function(){
 
     //リセット
-    $("button").click(function(){
-      $("option[value=reset]").prop("selected",true);
+    $("#remove").click(function(){
+      //$("option[value=reset]").prop("selected",true); 下の書き方参考
+      $("select[name=pref]").val("reset")
     });
 
-    $("select").change(function(){
+    $("select[name=pref]").change(function(){
       $(".media").hide();//とりあえず消す
-      var setOption = $("option:selected").val();//選択されたoptionのvalue取得
+      var setOption = $("select[name=pref]").val();//選択されたselectのvalue取得
       var setClass = "plef_"+setOption;//setOptionで取得した値と文字列plef_を連結する
       var showPref = $("div."+setClass).show();//連結したsetClassに該当するクラスを表示
       var classCount = $("div."+setClass).length;//連結したクラス名を持つクラスを数える
