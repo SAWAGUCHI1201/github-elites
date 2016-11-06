@@ -122,7 +122,7 @@ $places = array(
     <button id="remove">リセット</button>
 
     <p class="search-result">
-      <span class="classCount"></span>
+      <span class="pref_result"></span>
     </p>
 
     <?php foreach($places as $place => $key): ?>
@@ -155,9 +155,10 @@ $places = array(
       var setClass = "plef_"+setOption;//setOptionで取得した値と文字列plef_を連結する
       var showPref = $("div."+setClass).show();//連結したsetClassに該当するクラスを表示
       var classCount = $("div."+setClass).length;//連結したクラス名を持つクラスを数える
-      var InLength = $(".classCount").text(classCount + "件見つかりました。");//件数があった場合の処理クラスにclassCountで取得した数を入れる
       if ( classCount = "0" ){
-        $(".classCount").text("スポットは見つかりませんでした。");
+        $(".pref_result").text("スポットは見つかりませんでした。");
+      }else{
+        $(".pref_result").text(classCount + "件見つかりました。");//件数があった場合の処理クラスにclassCountで取得した数を入れる
       };
     });
   });
