@@ -136,7 +136,7 @@ $places = array(
         </div>
       </div>
     <?php endforeach ?>
-    <?php var_dump($place); ?>
+    <?php var_dump($place['name']); ?>
 
   </div>
   <hr>
