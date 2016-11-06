@@ -101,7 +101,7 @@ $places = array(
   h1 {margin: 0 0 30px 0;padding: 20px 30px;border-bottom: 1px solid #ccc;background-color: #f8f8f8;}
   footer {text-align:center;}
   .search-result {margin: 10px 0;}
-  /*.media {display:none;}
+  .media {display:none;}
   </style>
 </head>
 <body>
@@ -125,19 +125,21 @@ $places = array(
       <span>件数の表示はあとでやる</span>
     </p>
 
-    <?php foreach($places as $in_place => $place): ?>
-      <div class="media">
+    <?php foreach($places as $key => $place): ?>
+      <?php foreach($place as $item): ?>
+      <div class="media <?php echo $key; ?>">
         <div class="media-left">
-              <img src="<?php echo $place['image'] ?>">
+              <img src="<?php echo $item['image']; ?>">
         </div>
         <div class="media-body">
-          <?php echo '<h4>' . $place["name"] . '</h4>'; ?>
-          <?php echo '<p>' . $place["detail"] . '</p>'; ?>
+          <?php echo '<h4>' . $item["name"] . '</h4>'; ?>
+          <?php echo '<p>' . $item["detail"] . '</p>'; ?>
         </div>
       </div>
-    <?php endforeach ?>
-    <?php var_dump($place['name']); ?>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
 
+<?php var_dump($key); ?>
   </div>
   <hr>
   <footer>&copy; 観光スポット検索協会 </footer>
@@ -151,8 +153,9 @@ $places = array(
     //selectが変更された時のvalを取得
     //div classにvalを代入して表示するclassを特定する
     $("select").change(function(){
-      var setOption = $("option:selected").val();//選択されたoptionのvalue取得
-      var showPref = $(".media."+setOption).show();//取得したvalに該当するクラスを表示
+      //$(".media").hide();
+      //var setOption = $("option:selected").val();//選択されたoptionのvalue取得
+      //var showPref = $(".media."+setOption).show();//取得したvalに該当するクラスを表示
       // $("div."+setOption:not("div")).hide();
       //$(".media."+setOption).not(".media").hide(".media");//選択されたoption以外を非表示
     });
