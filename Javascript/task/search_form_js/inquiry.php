@@ -148,7 +148,8 @@ $places = array(
     $("#remove").click(function(){
       //$("option[value=reset]").prop("selected",true); 下の書き方参考
       $("select[name=pref]").val("reset");
-      $(".media").hide();
+      $(".media").hide();//divの非表示
+      $(".pref_result").text("");//件数のリセット
     });
 
     $("select[name=pref]").change(function(){
