@@ -12,17 +12,19 @@ create table members (
 class Member
 {
 
+
   public function set()
   {
-    array(
-      'name'=>'name',
-      'age'=>'20',
-      'email'=>'email'
-      );
+    $array = array(
+      'name'  => 'name',
+      'age'   => 20,
+      'email' => 'email'
+    );
+
+    foreach( $array as $key){
+      echo $key;
+    }
   }
-
-
-
 
   public function insert(){//データベース接続設定
     try{
@@ -39,9 +41,9 @@ class Member
     $sql = 'insert into members (name,age,email,created_at)
             values(:name, :age, :email, now() );';
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(":name", $this->set[0]);
-    $stmt->bindParam(":age", $this->set[1]);
-    $stmt->bindParam(":email", $this->set[2]);
+    $stmt->bindParam(":name", $key['name'];
+    $stmt->bindParam(":age", $key['age'];
+    $stmt->bindParam(":email", $key['email'];
 
     $stmt->execute();
 
@@ -73,6 +75,7 @@ class Member
 $member = new Member();
 $member->insert();//insert分実行
 // // メンバーのデータをセットします。
+$member->set();
 $member->set(array(
   'name' => 'テスト名',
   'age' => 30,
