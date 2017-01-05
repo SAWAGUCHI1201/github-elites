@@ -41,7 +41,7 @@ class Member
 
   public function findByEmail($fetchemail){
 
-    $this->data2 = $fetchemail;
+    $data2 = $fetchemail;
 
     try
     {
