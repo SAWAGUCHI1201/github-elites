@@ -4,84 +4,77 @@ create table members (
   id int primary key auto_increment,
   name varchar(32),
   age int,
-  email varchar(100) UNIQUE,
+  email varchar(100) UNIQUE,値が重複しないようにする
   created_at datetime
 );
 */
-
 class Member
 {
+  public $data;
 
-
-  public function set()
-  {
-    $array = array(
-      'name'  => 'name',
-      'age'   => 20,
-      'email' => 'email'
-    );
-
-    foreach( $array as $key){
-      echo $key;
-    }
+  public function set($member_data) {
+    $this->data = $member_data;//定義した空のメンバ変数に代入する
   }
 
-  public function insert(){//データベース接続設定
-    try{
-      $dbh = new PDO('mysql:host=localhost; dbname=obj_task; charset=utf8',
-        'userName','0000',array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+  public function insert() {
+    try
+    {
+      $dbh = new PDO('mysql:host=localhost;dbname=obj_task;charset=utf8', 'userName', '0000', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     }
-    catch(PDOExeption $e)
+    catch (PDOException $e)
     {
       echo $e->getMessage();
       exit;
     }
 
-    //sql実行処理
-    $sql = 'insert into members (name,age,email,created_at)
-            values(:name, :age, :email, now() );';
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(":name", $key['name'];
-    $stmt->bindParam(":age", $key['age'];
-    $stmt->bindParam(":email", $key['email'];
+    $member_data = $this->data;//bindParam用で代入
 
+    $sql = 'insert into members(name,age,email,created_at) values(:name,:age,:email,now())';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(":name", $member_data['name']);
+    $stmt->bindParam(":age", $member_data['age']);
+    $stmt->bindParam(":email", $member_data['email']);
     $stmt->execute();
 
   }
 
-  // public function insert(){
-  //     //データベース書き込み
-  //     $dbh = connectedDB();
-  //     $sql = 'insert into members(name,age,email)value(' .
-  //             $this->contact_info['name'],
-  //             $this->contact_info['age'],
-  //             $this->contact_info['email']
-  //             . ');';
-  //     $stml = $this->dbh->prepare($sql);
-  //     $stmt->execute();
 
-  //     //テーブルから全てのレコードを$dataへ格納する
-  //     public $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  //     echo $data;
-  // }
+  public function findByEmail($fetchemail){
+
+    $this->data2 = $fetchemail;
+
+    try
+    {
+      $dbh = new PDO('mysql:host=localhost;dbname=obj_task;charset=utf8', 'userName', '0000', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    }
+    catch (PDOException $e)
+    {
+      echo $e->getMessage();
+      exit;
+    }
+
+    $sql = 'select * from members where email = :email';
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':email',$this->data2);
+    $stmt->execute();
+    $row = $stmt->fetchAll();
+
+    var_dump($row);
+
+  }
 }
-
-
-
-
 
 //--------------------------------------------------------------------------
 // members テーブルのデータを表します。
 $member = new Member();
-$member->insert();//insert分実行
-// // メンバーのデータをセットします。
-$member->set();
-$member->set(array(
-  'name' => 'テスト名',
-  'age' => 30,
-  'email' => 'test@example.com',
-));
-
+//$member->insert();//insert分実行
+//メンバーのデータをセットします。
+// $member->set(array(
+//   'name' => 'テストネーム1',
+//   'age' => 30,
+//   'email' => 'test3@example.com',
+// ));
+//$member->insert();
 // // $member->set() でセットしたデータを members テーブルに追加登録します。
 // // この時 created_at カラムに現在日時を自動的にセットするようにしてください。
 // // 登録が成功した場合は true 、失敗した場合は false を返します。
@@ -97,7 +90,8 @@ $member->set(array(
 // //   'created_at' => 'members テーブル の created_at カラムの値',
 // // );
 // // ユーザーが見つからなかった場合、false を返します。
-// $data = $member->findByEmail('test@example.com');
+$data2 = $member->findByEmail('test@example.com');
+$member->findByEmail();
 
 // // 引数で指定された id を持つ members テーブルのレコードを削除します。
 // // 削除が成功した場合は true 、失敗した場合は false を返します。
