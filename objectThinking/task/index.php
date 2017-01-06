@@ -39,9 +39,7 @@ class Member
   }
 
 
-  public function findByEmail($fetchemail){
-
-    $data2 = $fetchemail;
+  public function findByEmail($fetchEmail = null){
 
     try
     {
@@ -55,11 +53,12 @@ class Member
 
     $sql = 'select * from members where email = :email';
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(':email',$this->data2);
+    $stmt->bindParam(':email',$fetchEmail);
     $stmt->execute();
     $row = $stmt->fetchAll();
 
     var_dump($row);
+    return $row;
 
   }
 }
@@ -90,8 +89,7 @@ $member = new Member();
 // //   'created_at' => 'members テーブル の created_at カラムの値',
 // // );
 // // ユーザーが見つからなかった場合、false を返します。
-$data2 = $member->findByEmail('test@example.com');
-$member->findByEmail();
+$fecthEmail = $member->findByEmail('test@example.com');
 
 // // 引数で指定された id を持つ members テーブルのレコードを削除します。
 // // 削除が成功した場合は true 、失敗した場合は false を返します。
