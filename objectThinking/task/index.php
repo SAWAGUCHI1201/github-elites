@@ -49,7 +49,7 @@ class ShopItem extends TableBase//---------------------------------------------
   public function insert() {
     $dbh = $this->connectDatabase();
     $get_data = $this->data;//bindParam用で代入
-    $sql = 'insert into' . $this->tableName . '(code,name,price,created_at) values(:code,:name,:price,now())';
+    $sql = 'insert into ' . $this->tableName . '(code,name,price,created_at) values(:code,:name,:price,now())';
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":code", $get_data['code']);
     $stmt->bindParam(":name", $get_data['name']);
@@ -60,13 +60,14 @@ class ShopItem extends TableBase//---------------------------------------------
   public function findByCode($fetchCode = null)
   {
     $dbh = $this->connectDatabase();
-    $sql = 'select * from members where code = :code';
+    $sql = 'select * from ' . $this->tableName . ' where code = :code';
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(':code',$fetchCode);
     $stmt->execute();
     $row = $stmt->fetch();
     //fetchAll(全データを配列に変換 全ての結果行を含む配列を返す)
     ///全ての結果行なのでここでは全て(配列)の中の結果行(配列)となる。
+    print_r($row);
     return $row;
   }
 
@@ -90,13 +91,14 @@ class Member extends TableBase//-----------------------------------------------
   public function findByEmail($fetchEmail = null)
   {
     $dbh = $this->connectDatabase();
-    $sql = 'select * from members where email = :email';
+    $sql = 'select * from ' . $this->tableName . ' where email = :email';
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(':email',$fetchEmail);
     $stmt->execute();
     $row = $stmt->fetch();
     //fetchAll(全データを配列に変換 全ての結果行を含む配列を返す)
     ///全ての結果行なのでここでは全て(配列)の中の結果行(配列)となる。
+    print_r($row);
     return $row;
   }
 }
@@ -111,32 +113,41 @@ $ShopItem->set(array(
    'price' => 148000 ,
    ));
 $ShopItem->insert();
+$fecthCode = $ShopItem->findByCode('1201');
 //$result = $ShopItem->delete(1);
 exit;
 // ------------------------------------------------------------
-// $member = new Member();
+$member = new Member();
 // $member->set(array(
 //    'name' => 'ぐっちー',
 //    'age' => 30,
-//    'email' => 'sawaguchi2@example.com',//次は違うやつで
+//    'email' => 'sawaguchi3@example.com',//次は違うやつで
 //    ));
 // $member->insert();
-// //$result = $member->delete(1);
-// var_dump($member);
-// exit;
+//$fecthEmail = $member->findByEmail('sawaguchi3@example.com');
+//$result = $member->delete(3);
+//var_dump($member);
+exit;
 
 
 
 
 
-
-// ------------------------------------------------------------
-//$member->insert();
+//課題内容 1
+// // members テーブルのデータを表します。
+// $member = new Member();
+// // メンバーのデータをセットします。
+// $member->set(array(
+//   'name' => 'テスト名',
+//   'age' => 30,
+//   'email' => 'test@example.com',
+// ));
+//
 // // $member->set() でセットしたデータを members テーブルに追加登録します。
 // // この時 created_at カラムに現在日時を自動的にセットするようにしてください。
 // // 登録が成功した場合は true 、失敗した場合は false を返します。
-$result = $member->insert();
-
+// $result = $member->insert();
+//
 // // 引数で指定されたメールアドレスのユーザーを members テーブルから探し、
 // // もし見つかった場合、そのデータを以下の形式で返します。
 // // array(
@@ -147,14 +158,12 @@ $result = $member->insert();
 // //   'created_at' => 'members テーブル の created_at カラムの値',
 // // );
 // // ユーザーが見つからなかった場合、false を返します。
-$fecthEmail = $member->findByEmail('test@example.com');
-
+// $data = $member->findByEmail('test@example.com');
+//
 // // 引数で指定された id を持つ members テーブルのレコードを削除します。
 // // 削除が成功した場合は true 、失敗した場合は false を返します。
-$result = $member->delete($fecthEmail['id']);
-
+// $result = $member->delete($data['id']);
+//
 // // ここでは false が返ってくるはずです。
-$fecthEmail = $member->findByEmail('test@example.com');
-
-
+// $data = $member->findByEmail('test@example.com');
 ?>
